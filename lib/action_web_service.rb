@@ -22,14 +22,19 @@
 #++
 
 begin
-  require 'active_support'
-  require 'action_controller'
-  require 'active_record'
+  require 'activesupport'
+  require 'actioncontroller'
+  require 'activerecord'
+  require 'activesupport'
+  require 'actionpack'
+  require 'active_support/core_ext/class/inheritable_attributes'
+  require 'action_dispatch/routing'
 rescue LoadError
   require 'rubygems'
-  gem 'activesupport', '>= 2.3.0'
-  gem 'actionpack', '>= 2.3.0'
-  gem 'activerecord', '>= 2.3.0'
+  gem 'activesupport', '3.0.0.rc2'
+  gem 'actionpack', '3.0.0.rc2'
+  gem 'activerecord', '3.0.0.rc2'
+  gem 'activesupport', '3.0.0.rc2'
 end
 
 $:.unshift(File.dirname(__FILE__) + "/action_web_service/vendor/")

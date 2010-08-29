@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/abstract_unit'
+require 'abstract_unit'
 
 ActionController::Routing::Routes.draw do |map|
   map.connect '', :controller => 'scaffolded'

@@ -217,9 +217,9 @@ module ActionWebService # :nodoc:
                       when binding.type.array?
                         xm.xsd(:complexType, 'name' => binding.type_name) do
                           xm.xsd(:complexContent) do
-                            xm.xsd(:restriction, 'base' => 'soapenc:Array') do
-                              xm.xsd(:attribute, 'ref' => 'soapenc:arrayType',
-                                                 'wsdl:arrayType' => binding.element_binding.qualified_type_name('typens') + '[]')
+                            xm.xsd(:restriction, 'base' => 'action_web_service/soapenc:Array') do
+                              xm.xsd(:attribute, 'ref' => 'action_web_service/soapenc:arrayType',
+                                                 'action_web_service/wsdl:arrayType' => binding.element_binding.qualified_type_name('typens') + '[]')
                             end
                           end
                         end
@@ -290,7 +290,7 @@ module ActionWebService # :nodoc:
                                     + "/" + api_name.to_s \
                                     + "/" + method.public_name
                       end
-                      xm.soap(:operation, 'soapAction' => soap_action)
+                      xm.soap(:operation, 'action_web_service/soapAction' => soap_action)
                       xm.input do
                         xm.soap(:body,
                                 'use'           => 'encoded',

@@ -1,4 +1,4 @@
-require 'soap/rpc/driver'
+require 'action_web_service/soap/rpc/driver'
 require 'uri'
 
 module ActionWebService # :nodoc:

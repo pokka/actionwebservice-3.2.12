@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/abstract_client'
+require 'abstract_client'
 
 
 module ClientXmlRpcTest

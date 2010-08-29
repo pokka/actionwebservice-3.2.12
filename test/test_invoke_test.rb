@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/abstract_unit'
+require 'abstract_unit'
 require 'action_web_service/test_invoke'
 
 class TestInvokeAPI < ActionWebService::API::Base

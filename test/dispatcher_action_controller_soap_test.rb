@@ -1,6 +1,6 @@
 $:.unshift(File.dirname(__FILE__) + '/apis')
-require File.dirname(__FILE__) + '/abstract_dispatcher'
-require 'wsdl/parser'
+require 'abstract_dispatcher'
+require 'action_web_service/wsdl/parser'
 
 class ActionController::Base
   class << self

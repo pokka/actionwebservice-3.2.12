@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/abstract_unit'
+require 'abstract_unit'
 
 module CastingTest
   class A < ActionWebService::Struct; end

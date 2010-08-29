@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/abstract_unit'
+require 'abstract_unit'
 require 'stringio'
 
 class ActionController::Base; def rescue_action(e) raise e end; end

@@ -7,6 +7,8 @@ require 'action_controller'
 require 'action_controller/test_case'
 require 'action_view'
 require 'action_view/test_case'
+require 'active_record'
+require 'active_record/test_case'
 
 # Show backtraces for deprecated behavior for quicker cleanup.
 ActiveSupport::Deprecation.debug = true
@@ -15,7 +17,7 @@ ActiveSupport::Deprecation.debug = true
 ActiveRecord::Base.logger = ActionController::Base.logger = Logger.new("debug.log")
 
 begin
-  require 'activerecord'
+  require 'active_record'
   require "active_record/test_case"
   require "active_record/fixtures" unless Object.const_defined?(:Fixtures)
 rescue LoadError => e

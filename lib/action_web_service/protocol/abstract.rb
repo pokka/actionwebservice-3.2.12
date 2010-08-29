@@ -1,3 +1,6 @@
+require 'action_dispatch'
+require 'action_controller'
+
 module ActionWebService # :nodoc:
   module Protocol # :nodoc:
     class ProtocolError < ActionWebServiceError # :nodoc:
@@ -71,7 +74,7 @@ module ActionWebService # :nodoc:
       end
     end
 
-    class SimpleActionPackRequest < ActionController::Request # :nodoc:
+    class SimpleActionPackRequest < ActionDispatch::Request # :nodoc:
       def initialize(env = {})
         @env = env
         @qparams = {}

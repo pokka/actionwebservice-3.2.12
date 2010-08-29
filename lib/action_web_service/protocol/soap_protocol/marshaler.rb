@@ -1,4 +1,4 @@
-require 'soap/mapping'
+require 'action_web_service/soap/mapping'
 
 # hack to improve the .Net interoperability
 class SOAP::Mapping::Object

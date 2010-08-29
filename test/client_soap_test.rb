@@ -1,4 +1,5 @@
-require File.dirname(__FILE__) + '/abstract_client'
+require 'abstract_unit'
+require 'abstract_client'
 
 
 module ClientSoapTest
