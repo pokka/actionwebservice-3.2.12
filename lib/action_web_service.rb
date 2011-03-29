@@ -31,10 +31,10 @@ begin
   require 'action_dispatch/routing'
 rescue LoadError
   require 'rubygems'
-  gem 'activesupport', '3.0.5'
-  gem 'actionpack', '3.0.5'
-  gem 'activerecord', '3.0.5'
-  gem 'activesupport', '3.0.5'
+  gem 'activesupport', '>=3.0.5'
+  gem 'actionpack'   , '>=3.0.5'
+  gem 'activerecord' , '>=3.0.5'
+  gem 'activesupport', '>=3.0.5'
 end
 
 require 'action_web_service/support/class_inheritable_options'

@@ -10,7 +10,7 @@ module XSD
 
 
 module Charset
-  @internal_encoding = $KCODE
+  @internal_encoding = $KCODE || "UTF8"
 
   class XSDError < StandardError; end
   class CharsetError < XSDError; end
@@ -167,7 +167,7 @@ public
     SJISRegexp =~ str
   end
 
-  def Charset.is_ces(str, code = $KCODE)
+  def Charset.is_ces(str, code = $KCODE || "UTF8")
     case code
     when 'NONE'
       is_us_ascii(str)

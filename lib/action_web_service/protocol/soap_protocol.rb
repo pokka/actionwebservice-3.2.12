@@ -145,7 +145,7 @@ module ActionWebService # :nodoc:
 
         private
           def has_valid_soap_action?(request)
-            return nil unless request.method == :post
+            return nil unless (request.method == :post || request.method == "POST")
             soap_action = request.env['HTTP_SOAPACTION']
             return nil unless soap_action
             soap_action = soap_action.dup

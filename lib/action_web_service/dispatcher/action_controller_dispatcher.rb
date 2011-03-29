@@ -38,7 +38,7 @@ module ActionWebService # :nodoc:
         private
           def dispatch_web_service_request
             method = request.method.to_s.upcase
-            allowed_methods = self.class.web_service_api ? (self.class.web_service_api.allowed_http_methods || []) : [ :post ]
+            allowed_methods = self.class.web_service_api ? (self.class.web_service_api.allowed_http_methods || []) : [ :post, "POST"]
             allowed_methods = allowed_methods.map{|m| m.to_s.upcase }
             if !allowed_methods.include?(method)
               render :text => "#{method} not supported", :status=>500
@@ -62,18 +62,18 @@ module ActionWebService # :nodoc:
               end
               log_request(ws_request, request.raw_post)
               if exception
-                log_error(exception) unless logger.nil?
+                Rails.logger(exception) unless logger.nil?
                 send_web_service_error_response(ws_request, exception)
               else
                 send_web_service_response(ws_response, bm.real)
               end
             else
               exception ||= DispatcherError.new("Malformed SOAP or XML-RPC protocol message")
-              log_error(exception) unless logger.nil?
+              Rails.logger(exception) unless logger.nil?
               send_web_service_error_response(ws_request, exception)
             end
           rescue Exception => e
-            log_error(e) unless logger.nil?
+            Rails.logger(e) unless logger.nil?
             send_web_service_error_response(ws_request, e)
           end
 
@@ -150,14 +150,14 @@ module ActionWebService # :nodoc:
 
         def wsdl
           case request.method
-          when :get
+          when "GET" || :get
             begin
               options = { :type => 'text/xml', :disposition => 'inline' }
               send_data(to_wsdl, options)
             rescue Exception => e
-              log_error(e) unless logger.nil?
+              Rails.logger(e) unless logger.nil?
             end
-          when :post
+          when "POST" || :post
             render :status => 500, :text => 'POST not supported'
           end
         end
@@ -165,10 +165,8 @@ module ActionWebService # :nodoc:
         private
           def base_uri
             host = request.host_with_port
-            #relative_url_root = ::ActionController::Base.relative_url_root
-			relative_url_root = config.action_controller.relative_url
             scheme = request.ssl? ? 'https' : 'http'
-            '%s://%s%s/%s/' % [scheme, host, relative_url_root, self.class.controller_path]
+            '%s://%s/%s/' % [scheme, host, self.class.controller_path]
           end
 
           def to_wsdl
@@ -218,9 +216,9 @@ module ActionWebService # :nodoc:
                       when binding.type.array?
                         xm.xsd(:complexType, 'name' => binding.type_name) do
                           xm.xsd(:complexContent) do
-                            xm.xsd(:restriction, 'base' => 'action_web_service/soapenc:Array') do
-                              xm.xsd(:attribute, 'ref' => 'action_web_service/soapenc:arrayType',
-                                                 'action_web_service/wsdl:arrayType' => binding.element_binding.qualified_type_name('typens') + '[]')
+                            xm.xsd(:restriction, 'base' => 'soapenc:Array') do
+                              xm.xsd(:attribute, 'ref' => 'soapenc:arrayType',
+                                                 'wsdl:arrayType' => binding.element_binding.qualified_type_name('typens') + '[]')
                             end
                           end
                         end
@@ -291,7 +289,7 @@ module ActionWebService # :nodoc:
                                     + "/" + api_name.to_s \
                                     + "/" + method.public_name
                       end
-                      xm.soap(:operation, 'action_web_service/soapAction' => soap_action)
+                      xm.soap(:operation, 'soapAction' => soap_action)
                       xm.input do
                         xm.soap(:body,
                                 'use'           => 'encoded',
