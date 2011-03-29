@@ -3,7 +3,7 @@ require 'builder/xmlmarkup'
 
 module ActionWebService # :nodoc:
   module Dispatcher # :nodoc:
-    module ActionController # :nodoc:
+    module ActionControllerX # :nodoc:
       def self.included(base) # :nodoc:
         class << base
           include ClassMethods
@@ -24,13 +24,13 @@ module ActionWebService # :nodoc:
             klass.class_eval 'def api; dispatch_web_service_request; end'
           end
         end
-        base.send(:include, ActionWebService::Dispatcher::ActionController::InstanceMethods)
+        base.send(:include, ActionWebService::Dispatcher::ActionControllerX::InstanceMethods)
       end
 
       module ClassMethods # :nodoc:
         def inherited_with_action_controller(child)
           inherited_without_action_controller(child)
-          child.send(:include, ActionWebService::Dispatcher::ActionController::WsdlAction)
+          child.send(:include, ActionWebService::Dispatcher::ActionControllerX::WsdlAction)
         end
       end
 
@@ -165,7 +165,8 @@ module ActionWebService # :nodoc:
         private
           def base_uri
             host = request.host_with_port
-            relative_url_root = ::ActionController::Base.relative_url_root
+            #relative_url_root = ::ActionController::Base.relative_url_root
+			relative_url_root = config.action_controller.relative_url
             scheme = request.ssl? ? 'https' : 'http'
             '%s://%s%s/%s/' % [scheme, host, relative_url_root, self.class.controller_path]
           end
