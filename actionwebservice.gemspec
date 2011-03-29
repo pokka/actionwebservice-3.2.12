@@ -10,17 +10,13 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "aws"
   s.homepage = "http://www.rubyonrails.org"
 
-  s.add_dependency('actionpack', '= 3.0.4')
-  s.add_dependency('activerecord', '= 3.0.4')
-  s.add_dependency('activesupport', '= 3.0.4')
+  s.add_dependency('actionpack', '= 3.0.5')
+  s.add_dependency('activerecord', '= 3.0.5')
+  s.add_dependency('activesupport', '= 3.0.5')
   
   s.has_rdoc = true
   s.requirements << 'none'
   s.require_path = 'lib'
 
   s.files = [ "Rakefile", "setup.rb", "README", "TODO", "CHANGELOG", "MIT-LICENSE" ]
-  spec.files += Dir['lib/**/*.rb']
-  spec.files += Dir['test/**/*']
-  spec.files += Dir['generators/**/*']
-  spec.files += Dir['examples/**/*']
 end

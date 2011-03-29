@@ -31,13 +31,11 @@ begin
   require 'action_dispatch/routing'
 rescue LoadError
   require 'rubygems'
-  gem 'activesupport', '3.0.4'
-  gem 'actionpack', '3.0.4'
-  gem 'activerecord', '3.0.4'
-  gem 'activesupport', '3.0.4'
+  gem 'activesupport', '3.0.5'
+  gem 'actionpack', '3.0.5'
+  gem 'activerecord', '3.0.5'
+  gem 'activesupport', '3.0.5'
 end
-
-$:.unshift(File.dirname(__FILE__) + "/action_web_service/vendor/")
 
 require 'action_web_service/support/class_inheritable_options'
 require 'action_web_service/support/signature_types'
