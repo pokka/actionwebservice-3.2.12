@@ -59,7 +59,7 @@ ValueArrayName = XSD::QName.new(EncodingNamespace, ValueArray).freeze
 Base64Literal = 'base64'
 
 SOAPNamespaceTag = 'env'
-XSDNamespaceTag = 'action_web_service/xsd'
+XSDNamespaceTag = 'xsd'
 XSINamespaceTag = 'xsi'
 
 MediaType = 'text/xml'
