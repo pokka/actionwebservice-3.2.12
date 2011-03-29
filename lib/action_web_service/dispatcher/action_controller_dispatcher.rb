@@ -167,6 +167,13 @@ module ActionWebService # :nodoc:
             host = request.host_with_port
             scheme = request.ssl? ? 'https' : 'http'
             '%s://%s/%s/' % [scheme, host, self.class.controller_path]
+
+          end
+
+          def base_uri_short
+            host = request.host_with_port
+            scheme = request.ssl? ? 'https' : 'http'
+            '%s://%s' % [scheme, host]
           end
 
           def to_wsdl
@@ -245,12 +252,17 @@ module ActionWebService # :nodoc:
                     xm.message('name' => message_name_for(api_name, msg_name)) do
                       sym = nil
                       if direction == :out
-                        returns = method.returns
-                        if returns
-                          binding = marshaler.register_type(returns[0])
-                          xm.part('name' => 'return', 'type' => binding.qualified_type_name('typens'))
-                        end
-                      else
+						returns = method.returns
+						if returns.size == 1
+						  binding = marshaler.register_type(returns[0])
+						  xm.part('name' => 'return', 'type' => binding.qualified_type_name('typens'))
+						else
+						  returns.each do |type|
+							binding = marshaler.register_type(type)
+							xm.part('name' => type.name, 'type' => binding.qualified_type_name('typens'))
+						  end if returns
+						end
+					  else
                         expects = method.expects
                         expects.each do |type|
                           binding = marshaler.register_type(type)
@@ -318,8 +330,13 @@ module ActionWebService # :nodoc:
                   when :delegated
                     binding_target = api_name.to_s
                   end
+                  if !action_base_url.blank?
+                    location = "#{base_uri_short}#{action_base_url}#{binding_target}"
+                  else
+                    location = "#{base_uri}#{binding_target}"
+                  end
                   xm.port('name' => port_name, 'binding' => "typens:#{binding_name}") do
-                    xm.soap(:address, 'location' => "#{base_uri}#{binding_target}")
+                    xm.soap(:address, 'location' => location)
                   end
                 end
               end

@@ -34,8 +34,13 @@ module ActionWebService # :nodoc:
         end
 
         def cast_returns(api_method, return_value) # :nodoc:
-          return nil if api_method.returns.nil?
-          cast(return_value, api_method.returns[0])
+          if api_method.returns.size == 1
+            return nil if api_method.returns.nil?
+            cast(return_value, api_method.returns[0])
+          else
+            return [] if api_method.returns.nil?
+            api_method.returns.zip(return_value).map{ |type, param| cast(param, type) }
+          end
         end
 
         def cast(value, signature_type) # :nodoc:

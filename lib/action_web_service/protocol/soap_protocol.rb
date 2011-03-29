@@ -17,6 +17,8 @@ module ActionWebService # :nodoc:
         base.register_protocol(SoapProtocol)
         base.class_inheritable_option(:wsdl_service_name)
         base.class_inheritable_option(:wsdl_namespace)
+        base.class_inheritable_option(:action_base)
+        base.class_inheritable_option(:action_base_url)
       end
       
       class SoapProtocol < AbstractProtocol # :nodoc:
