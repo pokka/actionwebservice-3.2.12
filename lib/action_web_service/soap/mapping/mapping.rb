@@ -42,7 +42,7 @@ module Mapping
     soap_obj = nil
     protect_threadvars(:SOAPMarshalDataKey, :SOAPExternalCES, :SOAPMarshalNoReference) do
       Thread.current[:SOAPMarshalDataKey] = {}
-      Thread.current[:SOAPExternalCES] = opt[:external_ces] || $KCODE || "UTF8"
+      Thread.current[:SOAPExternalCES] = opt[:external_ces] || "UTF8"
       Thread.current[:SOAPMarshalNoReference] = opt[:no_reference]
       soap_obj = _obj2soap(obj, registry, type)
     end
@@ -54,7 +54,7 @@ module Mapping
     obj = nil
     protect_threadvars(:SOAPMarshalDataKey, :SOAPExternalCES, :SOAPMarshalNoReference) do
       Thread.current[:SOAPMarshalDataKey] = {}
-      Thread.current[:SOAPExternalCES] = opt[:external_ces] || $KCODE || "UTF8"
+      Thread.current[:SOAPExternalCES] = opt[:external_ces] || "UTF8"
       Thread.current[:SOAPMarshalNoReference] = opt[:no_reference]
       obj = _soap2obj(node, registry, klass)
     end
@@ -67,7 +67,7 @@ module Mapping
     soap_ary = SOAPArray.new(ValueArrayName, 1, type)
     protect_threadvars(:SOAPMarshalDataKey, :SOAPExternalCES, :SOAPMarshalNoReference) do
       Thread.current[:SOAPMarshalDataKey] = {}
-      Thread.current[:SOAPExternalCES] = opt[:external_ces] || $KCODE || "UTF8"
+      Thread.current[:SOAPExternalCES] = opt[:external_ces] || "UTF8"
       Thread.current[:SOAPMarshalNoReference] = opt[:no_reference]
       ary.each do |ele|
         soap_ary.add(_obj2soap(ele, registry, type))
@@ -82,7 +82,7 @@ module Mapping
     md_ary = SOAPArray.new(ValueArrayName, rank, type)
     protect_threadvars(:SOAPMarshalDataKey, :SOAPExternalCES, :SOAPMarshalNoReference) do
       Thread.current[:SOAPMarshalDataKey] = {}
-      Thread.current[:SOAPExternalCES] = opt[:external_ces] || $KCODE || "UTF8"
+      Thread.current[:SOAPExternalCES] = opt[:external_ces] || "UTF8"
       Thread.current[:SOAPMarshalNoReference] = opt[:no_reference]
       add_md_ary(md_ary, ary, [], registry)
     end
