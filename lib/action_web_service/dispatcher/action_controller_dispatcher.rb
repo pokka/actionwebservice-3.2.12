@@ -62,18 +62,18 @@ module ActionWebService # :nodoc:
               end
               log_request(ws_request, request.raw_post)
               if exception
-                Rails.logger(exception) unless logger.nil?
+                Rails.logger.error(exception) unless logger.nil?
                 send_web_service_error_response(ws_request, exception)
               else
                 send_web_service_response(ws_response, bm.real)
               end
             else
               exception ||= DispatcherError.new("Malformed SOAP or XML-RPC protocol message")
-              Rails.logger(exception) unless logger.nil?
+              Rails.logger.error(exception) unless logger.nil?
               send_web_service_error_response(ws_request, exception)
             end
           rescue Exception => e
-            Rails.logger(e) unless logger.nil?
+            Rails.logger.error(e) unless logger.nil?
             send_web_service_error_response(ws_request, e)
           end
 
@@ -155,7 +155,7 @@ module ActionWebService # :nodoc:
               options = { :type => 'text/xml', :disposition => 'inline' }
               send_data(to_wsdl, options)
             rescue Exception => e
-              Rails.logger(e) unless logger.nil?
+              Rails.logger.error(e) unless logger.nil?
             end
           when "POST" || :post
             render :status => 500, :text => 'POST not supported'
