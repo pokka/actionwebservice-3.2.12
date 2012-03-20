@@ -27,7 +27,7 @@ begin
   require 'activerecord'
   require 'activesupport'
   require 'actionpack'
-  require 'active_support/core_ext/class/inheritable_attributes'
+  require 'active_support/core_ext/class/attribute'
   require 'action_dispatch/routing'
 rescue LoadError
   require 'rubygems'

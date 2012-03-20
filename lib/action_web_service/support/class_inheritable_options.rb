@@ -1,4 +1,4 @@
-require 'active_support/core_ext/class/inheritable_attributes'
+require 'active_support/core_ext/class/attribute'
 
 class Class # :nodoc:
   def class_inheritable_option(sym, default_value=nil)
