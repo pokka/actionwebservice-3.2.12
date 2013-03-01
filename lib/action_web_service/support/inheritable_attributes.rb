@@ -1,3 +1,4 @@
+#coding: utf-8
 # Hack to keep inheritable_attributes functionality as it was in rails 3.1,
 # minus the deprecations.
 

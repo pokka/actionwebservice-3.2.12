@@ -157,7 +157,7 @@ module ActionWebService
             "#{ns ? ns : @qname.namespace}:#{@qname.name}"
           else
             ns = XSD::NS.new
-            ns.assign(XSD::Namespace, SOAP::XSDNamespaceTag)
+            ns.assign(XSD::Namespace, 'xsd')
             ns.assign(SOAP::EncodingNamespace, "soapenc")
             xsd_klass = mapping[0].ancestors.find{|c| c.const_defined?('Type')}
             return ns.name(XSD::AnyTypeName) unless xsd_klass

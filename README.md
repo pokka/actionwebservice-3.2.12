@@ -1,3 +1,36 @@
+Notice
+=======
+Commend to use [WashOut],except you had to use ActionWebService.
+
+It works only in my case,never make strict testing, many things don't works well,but the core(wsdl spec,api calling).
+
+Is no need to fix that,going to build a new one.
+
+If you have a chance, please [stopsoap].
+
+Use [Savon] to test around before you using it.
+[Savon]:https://github.com/savonrb/savon
+[stopsoap]:http://stopsoap.com/
+[WashOut]:https://github.com/inossidabile/wash_out
+Usage
+========
+####Gemfile
+```
+gem "soap4r-ruby1.9", "~> 2.0.5"
+gem 'actionwebservice',:git => 'git://github.com/pokka/actionwebservice-3.2.12.git'
+```
+####Controller
+```
+class ShitController < ActionController::Base
+  layout false
+  wsdl_service_name 'shit'
+```
+####Routes
+```
+get 'shit/wsdl'
+post 'shit/api'
+```
+
 = Action Web Service -- Serving APIs on rails
 
 Action Web Service provides a way to publish interoperable web service APIs with

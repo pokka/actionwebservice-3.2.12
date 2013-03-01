@@ -1,5 +1,5 @@
 require 'active_support/core_ext/class/attribute'
-require 'inheritable_attributes'
+require File.dirname(__FILE__) + '/inheritable_attributes'
 class Class # :nodoc:
   def class_inheritable_option(sym, default_value=nil)
     write_inheritable_attribute sym, default_value

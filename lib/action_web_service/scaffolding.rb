@@ -41,21 +41,21 @@ module ActionWebService
         add_template_helper(Helpers)
         module_eval <<-"end_eval", __FILE__, __LINE__ + 1
           def #{action_name}
-            if request.method == :get
+            if request.get?
               setup_invocation_assigns
               render_invocation_scaffold 'methods'
             end
           end
 
           def #{action_name}_method_params
-            if request.method == :get
+            if request.get?
               setup_invocation_assigns
               render_invocation_scaffold 'parameters'
             end
           end
 
           def #{action_name}_submit
-            if request.method == :post
+            if request.post?
               setup_invocation_assigns
               protocol_name = params['protocol'] ? params['protocol'].to_sym : :soap
               case protocol_name
@@ -104,23 +104,24 @@ module ActionWebService
             end
 
             def render_invocation_scaffold(action)
-              customized_template = "\#{self.class.controller_path}/#{action_name}/\#{action}"
+              # customized_template = "\#{self.class.controller_path}/#{action_name}/\#{action}"
               default_template = scaffold_path(action)
-              begin
-                content = @template.render(:file => customized_template)
-              rescue ActionView::MissingTemplate
-                content = @template.render(:file => default_template)
-              end
-              @template.instance_variable_set("@content_for_layout", content)
-              if self.active_layout.nil?
-                render :file => scaffold_path("layout")
-              else
-                render :file => self.active_layout, :use_full_path => true
-              end
+              # begin
+              #   content = @template.render(:file => customized_template)
+              # rescue ActionView::MissingTemplate
+              #   content = @view_context.render(:file => default_template)
+              # end
+              # @template.instance_variable_set("@content_for_layout", content)
+              # if self.active_layout.nil?
+              #   render :file => scaffold_path("layout")
+              # else
+              #   render :file => self.active_layout, :use_full_path => true
+              # end
+              render :file => default_template,:layout => scaffold_path('layout')[1,-1]
             end
 
             def scaffold_path(template_name)
-              File.dirname(__FILE__) + "/templates/scaffolds/" + template_name + ".html.erb"
+              File.dirname(__FILE__) + "/templates/scaffolds/" + template_name# + ".html.erb"
             end
 
             def reset_invocation_response
@@ -203,14 +204,14 @@ module ActionWebService
           when :time, :datetime
             time = Time.now
             i = 0
-            %w|year month day hour minute second|.map do |name|
+            %w{year month day hour minute second}.map do |name|
               i += 1
               send("select_#{name}", time, :prefix => "#{field_name_base}[#{i}]", :discard_type => true)
             end.join
           when :date
             date = Date.today
             i = 0
-            %w|year month day|.map do |name|
+            %w{year month day}.map do |name|
               i += 1
               send("select_#{name}", date, :prefix => "#{field_name_base}[#{i}]", :discard_type => true)
             end.join
@@ -225,9 +226,9 @@ module ActionWebService
       def service_method_list(service)
         action = @scaffold_action_name + '_method_params'
         methods = service.api_methods_full.sort {|a, b| a[1] <=> b[1]}.map do |desc, name|
-          content_tag("li", link_to(name, :action => action, :service => service.name, :method => name))
+          content_tag("li", link_to("#{name} #{desc}", "/#{action}?method=#{name}&service=#{service.name}"))
         end
-        content_tag("ul", methods.join("\n"))
+        content_tag("ul", methods.join("\n").html_safe)
       end
     end
 

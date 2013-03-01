@@ -142,22 +142,24 @@ module ActionWebService # :nodoc:
       end
 
       module WsdlAction # :nodoc:
-        XsdNs             = 'http://www.w3.org/2001/XMLSchema'
-        WsdlNs            = 'http://schemas.xmlsoap.org/wsdl/'
-        SoapNs            = 'http://schemas.xmlsoap.org/wsdl/soap/'
-        SoapEncodingNs    = 'http://schemas.xmlsoap.org/soap/encoding/'
-        SoapHttpTransport = 'http://schemas.xmlsoap.org/soap/http'
+        XSD_NS             = 'http://www.w3.org/2001/XMLSchema'
+        WSDL_NS            = 'http://schemas.xmlsoap.org/wsdl/'
+        SOAP_NS            = 'http://schemas.xmlsoap.org/wsdl/soap/'
+        SOAP_ENCODING_NS    = 'http://schemas.xmlsoap.org/soap/encoding/'
+        SOAP_HTTP_TRANSPORT = 'http://schemas.xmlsoap.org/soap/http'
 
         def wsdl
-          case request.method
-          when "GET" || :get
-            begin
+          case
+          when request.get?
+            # begin
               options = { :type => 'text/xml', :disposition => 'inline' }
-              send_data(to_wsdl, options)
-            rescue Exception => e
-              Rails.logger.error(e) unless logger.nil?
-            end
-          when "POST" || :post
+              # send_data(to_wsdl, options)
+              render :xml => to_wsdl
+            # rescue Exception => e
+            #   Rails.logger.error(e) unless logger.nil?
+            #   render :text => e
+            # end
+          when request.post?
             render :status => 500, :text => 'POST not supported'
           end
         end
@@ -188,7 +190,8 @@ module ActionWebService # :nodoc:
             case dispatching_mode
             when :direct
               api = self.class.web_service_api
-              web_service_name = controller_class_name.sub(/Controller$/, '').underscore
+              # web_service_name = controller_class_name.sub(/Controller$/, '').underscore
+              web_service_name = controller_name
               apis[web_service_name] = [api, register_api(api, marshaler)]
             when :delegated, :layered
               self.class.web_services.each do |web_service_name, info|
@@ -209,15 +212,15 @@ module ActionWebService # :nodoc:
             xm.definitions('name'            => wsdl_service_name,
                            'targetNamespace' => namespace,
                            'xmlns:typens'    => namespace,
-                           'xmlns:xsd'       => XsdNs,
-                           'xmlns:soap'      => SoapNs,
-                           'xmlns:soapenc'   => SoapEncodingNs,
-                           'xmlns:wsdl'      => WsdlNs,
-                           'xmlns'           => WsdlNs) do
+                           'xmlns:xsd'       => XSD_NS,
+                           'xmlns:soap'      => SOAP_NS,
+                           'xmlns:soapenc'   => SOAP_ENCODING_NS,
+                           'xmlns:wsdl'      => WSDL_NS,
+                           'xmlns'           => WSDL_NS) do
               # Generate XSD
               if custom_types.size > 0
                 xm.types do
-                  xm.xsd(:schema, 'xmlns' => XsdNs, 'targetNamespace' => namespace) do
+                  xm.xsd(:schema, 'xmlns' => XSD_NS, 'targetNamespace' => namespace) do
                     custom_types.each do |binding|
                       case
                       when binding.type.array?
@@ -290,7 +293,7 @@ module ActionWebService # :nodoc:
                 # Bind it
                 binding_name = binding_name_for(global_service_name, api_name)
                 xm.binding('name' => binding_name, 'type' => "typens:#{port_name}") do
-                  xm.soap(:binding, 'style' => 'rpc', 'transport' => SoapHttpTransport)
+                  xm.soap(:binding, 'style' => 'rpc', 'transport' => SOAP_HTTP_TRANSPORT)
                   api.api_methods.each do |name, method|
                     xm.operation('name' => method.public_name) do
                       case web_service_dispatching_mode
@@ -306,13 +309,13 @@ module ActionWebService # :nodoc:
                         xm.soap(:body,
                                 'use'           => 'encoded',
                                 'namespace'     => namespace,
-                                'encodingStyle' => SoapEncodingNs)
+                                'encodingStyle' => SOAP_ENCODING_NS)
                       end
                       xm.output do
                         xm.soap(:body,
                                 'use'           => 'encoded',
                                 'namespace'     => namespace,
-                                'encodingStyle' => SoapEncodingNs)
+                                'encodingStyle' => SOAP_ENCODING_NS)
                       end
                     end
                   end
