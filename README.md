@@ -31,6 +31,8 @@ get 'shit/wsdl'
 post 'shit/api'
 ```
 
+####Others are same as below
+
 = Action Web Service -- Serving APIs on rails
 
 Action Web Service provides a way to publish interoperable web service APIs with
