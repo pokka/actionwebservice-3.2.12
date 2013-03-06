@@ -21,21 +21,21 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
-begin
-  require 'activesupport'
-  require 'actioncontroller'
-  require 'activerecord'
-  require 'activesupport'
-  require 'actionpack'
+# begin
+  require 'active_support'
+  require 'action_pack'
+  # require 'action_dispatch'
+  # require 'action_controller'
+  require 'active_record'
   require 'active_support/core_ext/class/attribute'
-  require 'action_dispatch/routing'
-rescue LoadError
-  require 'rubygems'
-  gem 'activesupport', '>=3.0.5'
-  gem 'actionpack'   , '>=3.0.5'
-  gem 'activerecord' , '>=3.0.5'
-  gem 'activesupport', '>=3.0.5'
-end
+  # require 'action_dispatch/request'
+# rescue LoadError
+#   require 'rubygems'
+#   gem 'activesupport', '>=3.0.5'
+#   gem 'actionpack'   , '>=3.0.5'
+#   gem 'activerecord' , '>=3.0.5'
+#   gem 'activesupport', '>=3.0.5'
+# end
 
 require 'action_web_service/support/class_inheritable_options'
 require 'action_web_service/support/signature_types'
@@ -49,21 +49,22 @@ require 'action_web_service/container'
 require 'action_web_service/protocol'
 require 'action_web_service/dispatcher'
 require 'action_web_service/scaffolding'
+require 'action_web_service/engine'
+require 'action_web_service/railtie'
+# ActionWebService::Base.class_eval do
+#   include ActionWebService::Container::Direct
+#   include ActionWebService::Invocation
+# end
 
-ActionWebService::Base.class_eval do
-  include ActionWebService::Container::Direct
-  include ActionWebService::Invocation
-end
-
-ActionController::Base.class_eval do
-  include ActionWebService::Protocol::Discovery
-  include ActionWebService::Protocol::Soap
-  include ActionWebService::Protocol::XmlRpc
-  include ActionWebService::Container::Direct
-  include ActionWebService::Container::Delegated
-  include ActionWebService::Container::ActionController
-  include ActionWebService::Invocation
-  include ActionWebService::Dispatcher
-  include ActionWebService::Dispatcher::ActionControllerX
-  include ActionWebService::Scaffolding
-end
+# ActionController::Base.class_eval do
+#   include ActionWebService::Protocol::Discovery
+#   include ActionWebService::Protocol::Soap
+#   include ActionWebService::Protocol::XmlRpc
+#   include ActionWebService::Container::Direct
+#   include ActionWebService::Container::Delegated
+#   include ActionWebService::Container::ActionController
+#   include ActionWebService::Invocation
+#   include ActionWebService::Dispatcher
+#   include ActionWebService::Dispatcher::ActionControllerX
+#   include ActionWebService::Scaffolding
+# end
