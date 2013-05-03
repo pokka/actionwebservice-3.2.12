@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
   s.require_path = 'lib'
 
-  s.files = [ "Rakefile", "setup.rb", "README", "TODO", "CHANGELOG", "MIT-LICENSE" ]
+  s.files = [ "Rakefile", "setup.rb", "README.md", "TODO", "CHANGELOG", "MIT-LICENSE" ]
 end
