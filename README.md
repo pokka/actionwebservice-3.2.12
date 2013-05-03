@@ -21,16 +21,21 @@ gem 'actionwebservice',:git => 'git://github.com/pokka/actionwebservice-3.2.12.g
 ```
 ####Controller
 ```
-class ShitController < ActionController::Base
+class ShitController < ActionWebService::WebServiceController
   layout false
-  wsdl_service_name 'shit'
+  wsdl_service_name 'your_service_name'
+  web_service_scaffold :your_invocation_test_name # as a option
 ```
 ####Routes
 ```
-get 'shit/wsdl'
-post 'shit/api'
+get 'your_service_name/wsdl'
+post 'your_service_name/api'
+get 'your_service_name/your_invocation_test_name'
+get 'your_invocation_test_name_method_params' => 'your_service_name#your_invocation_test_name_method_params'
+post 'your_invocation_test_name_submit' => 'your_service_name#invocation_submit'
 ```
-
+####Then Vist
+` localhost/your_service_name/your_invocation_test_name` to have a look at your functions.
 ####Others are same as below
 
 = Action Web Service -- Serving APIs on rails
