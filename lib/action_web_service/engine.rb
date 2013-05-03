@@ -8,8 +8,8 @@ module ActionWebService
         include ActionWebService::Container::Direct
         include ActionWebService::Invocation
       end
-      
-      ActionController::Base.class_eval do
+  
+      class ActionWebService::WebServiceController < ActionController::Base
         include ActionWebService::Protocol::Discovery
         include ActionWebService::Protocol::Soap
         include ActionWebService::Protocol::XmlRpc
@@ -21,6 +21,7 @@ module ActionWebService
         include ActionWebService::Dispatcher::ActionControllerX
         include ActionWebService::Scaffolding
       end
+
     end
 
   end

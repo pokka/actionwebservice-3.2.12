@@ -51,20 +51,3 @@ require 'action_web_service/dispatcher'
 require 'action_web_service/scaffolding'
 require 'action_web_service/engine'
 require 'action_web_service/railtie'
-# ActionWebService::Base.class_eval do
-#   include ActionWebService::Container::Direct
-#   include ActionWebService::Invocation
-# end
-
-# ActionController::Base.class_eval do
-#   include ActionWebService::Protocol::Discovery
-#   include ActionWebService::Protocol::Soap
-#   include ActionWebService::Protocol::XmlRpc
-#   include ActionWebService::Container::Direct
-#   include ActionWebService::Container::Delegated
-#   include ActionWebService::Container::ActionController
-#   include ActionWebService::Invocation
-#   include ActionWebService::Dispatcher
-#   include ActionWebService::Dispatcher::ActionControllerX
-#   include ActionWebService::Scaffolding
-# end

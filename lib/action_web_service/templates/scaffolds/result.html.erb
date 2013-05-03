@@ -1,4 +1,4 @@
-<h4>Method Invocation Result for <em><%= @scaffold_service %>#<%= @scaffold_method.public_name %></em></h4>
+<h4>Method Invocation Result for <em><%= @scaffold_service %>#<%= @scaffold_method.try(:public_name) %></em></h4>
 
 <p>
 Invocation took <tt><%= '%f' % @method_elapsed %></tt> seconds
@@ -7,7 +7,7 @@ Invocation took <tt><%= '%f' % @method_elapsed %></tt> seconds
 <p>
 <strong>Return Value:</strong><br />
 <pre>
-<%= h @method_return_value.inspect %>
+<%= @method_return_value.inspect %>
 </pre>
 </p>
 
@@ -26,5 +26,5 @@ Invocation took <tt><%= '%f' % @method_elapsed %></tt> seconds
 </p>
 
 <p>
-<%= link_to "Back", :action => @scaffold_action_name + '_method_params', :method => @scaffold_method.public_name, :service => @scaffold_service.name %>
+<%= link_to "Back", :controller => controller_name,:action => @scaffold_action_name + '_method_params', :method => @scaffold_method.try(:public_name), :service => @scaffold_service.name %>
 </p>

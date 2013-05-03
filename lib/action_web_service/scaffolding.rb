@@ -121,12 +121,18 @@ module ActionWebService
             end
 
             def scaffold_path(template_name)
-              File.dirname(__FILE__) + "/templates/scaffolds/" + template_name# + ".html.erb"
+              File.dirname(__FILE__) + "/templates/scaffolds/" + template_name
             end
 
             def reset_invocation_response
-              erase_render_results
-              response.instance_variable_set :@header, Rack::Utils::HeaderHash.new(::ActionController::Response::DEFAULT_HEADERS.merge("cookie" => []))
+              self.instance_variable_set(:@_response_body, nil)
+              response.instance_variable_set :@header, Rack::Utils::HeaderHash.new("cookie" => [], 'Content-Type' => 'text/html')
+              # self.instance_variable_set(:@_response_body, nil)
+              # @response.headers = @response.class.default_headers.merge("cookie" => [])
+              # ActionDispatch::Response.default_headers
+              # response.body = nil
+              # response.headers = ActionDispatch::Response.default_headers.merge('cookie' => [])
+              # response.instance_variable_set :@header, Rack::Utils::HeaderHash.new(::ActionController::Response::DEFAULT_HEADERS.merge("cookie" => []))
             end
 
             def public_method_name(service_name, method_name)
@@ -154,7 +160,7 @@ module ActionWebService
               end
               return unless exception
               reset_invocation_response
-              rescue_action(exception)
+              # rescue_action_without_handler(exception)
               true
             end
         end_eval
