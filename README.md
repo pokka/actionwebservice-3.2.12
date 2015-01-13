@@ -32,7 +32,7 @@ get 'your_service_name/wsdl'
 post 'your_service_name/api'
 get 'your_service_name/your_invocation_test_name'
 get 'your_invocation_test_name_method_params' => 'your_service_name#your_invocation_test_name_method_params'
-post 'your_invocation_test_name_submit' => "your_service_name##{your_invocation_test_name}_submit"
+post 'your_invocation_test_name_submit' => "your_service_name#your_invocation_test_name_submit"
 ```
 ####Then Vist
 ` localhost/your_service_name/your_invocation_test_name` to have a look at your functions.
